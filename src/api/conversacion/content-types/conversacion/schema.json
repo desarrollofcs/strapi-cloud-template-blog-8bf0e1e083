@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "conversacions",
+  "info": {
+    "singularName": "conversacion",
+    "pluralName": "conversacions",
+    "displayName": "Conversacion",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "conversationId": {
+      "type": "text",
+      "required": true,
+      "unique": true
+    },
+    "historial": {
+      "type": "json",
+      "required": true
+    },
+    "ultimaVista": {
+      "type": "enumeration",
+      "enum": [
+        "classic",
+        "elegant"
+      ]
+    },
+    "hiloOpenAI": {
+      "type": "text"
+    },
+    "metricas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::metrica.metrica",
+      "mappedBy": "conversacion"
+    }
+  }
+}
