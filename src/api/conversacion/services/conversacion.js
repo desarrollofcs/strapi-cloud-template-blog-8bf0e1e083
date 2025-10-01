@@ -31,8 +31,14 @@ module.exports = createCoreService('api::conversacion.conversacion', ({ strapi }
     if (!existing) {
       return null;
     }
-    const updated = await strapi.entityService.update('api::conversacion.conversacion', existing.id, { data });
-    return updated;
+    // Realiza la actualización. No usamos la variable de retorno por si devuelve datos obsoletos.
+    await strapi.entityService.update('api::conversacion.conversacion', existing.id, { data });
+    
+    // Vuelve a buscar la entidad explícitamente desde la base de datos
+    // para garantizar que devolvemos los datos más frescos y confirmar que la escritura fue exitosa.
+    const freshEntity = await this.findByCid(cid);
+    
+    return freshEntity;
   },
   
   /**
